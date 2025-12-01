@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Seasonal Risks - AyurDosha Pro{% endblock %}
+
+{% block content %}
+<section class="seasonal-section" style="padding: 60px 0; min-height: 80vh;">
+    <div class="container">
+        <div class="text-center mb-5 animate-fade-in">
+            <h1 class="text-gradient mb-3">Seasonal Dosha Risks</h1>
+            <p class="text-muted lead">Ayurveda teaches us to live in harmony with the seasons. Select a month to see
+                risks based on your Dosha.</p>
+        </div>
+
+        <div class="glass-panel p-4 mb-5 animate-fade-in"
+            style="max-width: 800px; margin: 0 auto; animation-delay: 0.2s;">
+            <div class="row align-items-center text-center text-md-start">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h4 class="mb-0 text-muted">Your Dominant Dosha:</h4>
+                    <h2 id="user-dosha" style="color: var(--primary-color); font-weight: 700;">Detecting...</h2>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <select id="month-select" class="form-select form-select-lg"
+                        style="border-radius: 30px; border: 2px solid var(--accent-color); color: var(--text-dark); font-weight: 500;">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Climate Link Banner -->
+        <div class="alert alert-light shadow-sm text-center mb-5 animate-fade-in" role="alert"
+            style="border-radius: 15px; border-left: 5px solid var(--climate-blue); animation-delay: 0.3s;">
+            <i class="fas fa-info-circle text-primary me-2"></i>
+            <strong>New Feature!</strong> Check real-time weather impacts on our <a href="/climate-impact"
+                class="alert-link text-decoration-underline">Climate Impact Dashboard</a>.
+        </div>
+
+        <!-- Risk Display Area -->
+        <div id="risk-display" style="display: none;">
+            <div class="text-center mb-5 animate-fade-in" style="animation-delay: 0.4s;">
+                <h3 class="text-muted">Season's Aggravated Dosha: <span id="season-dosha"
+                        style="color: var(--primary-color); font-weight: 700;"></span></h3>
+            </div>
+
+            <div class="row g-4">
+                <!-- High Risk Column -->
+                <div class="col-md-4 animate-fade-in" style="animation-delay: 0.5s;">
+                    <div class="p-3 rounded-3"
+                        style="background: rgba(211, 47, 47, 0.05); border: 1px solid rgba(211, 47, 47, 0.1);">
+                        <h4 class="text-center mb-4" style="color: #D32F2F;"><i
+                                class="fas fa-exclamation-triangle me-2"></i> High Risk</h4>
+                        <div id="high-risk-container"></div>
+                    </div>
+                </div>
+                <!-- Medium Risk Column -->
+                <div class="col-md-4 animate-fade-in" style="animation-delay: 0.6s;">
+                    <div class="p-3 rounded-3"
+                        style="background: rgba(255, 152, 0, 0.05); border: 1px solid rgba(255, 152, 0, 0.1);">
+                        <h4 class="text-center mb-4" style="color: #F57C00;"><i
+                                class="fas fa-exclamation-circle me-2"></i> Medium Risk</h4>
+                        <div id="medium-risk-container"></div>
+                    </div>
+                </div>
+                <!-- Low Risk Column -->
+                <div class="col-md-4 animate-fade-in" style="animation-delay: 0.7s;">
+                    <div class="p-3 rounded-3"
+                        style="background: rgba(56, 142, 60, 0.05); border: 1px solid rgba(56, 142, 60, 0.1);">
+                        <h4 class="text-center mb-4" style="color: #388E3C;"><i class="fas fa-check-circle me-2"></i>
+                            Low Risk</h4>
+                        <div id="low-risk-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Disease Detail Modal -->
+<div class="modal fade" id="diseaseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header text-white"
+                style="background: var(--primary-color); border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                <h5 class="modal-title" id="modal-title">Disease Detail</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="modal-badges" class="mb-4"></div>
+
+                <div class="p-3 rounded mb-4" style="background: #f9f9f9; border-left: 4px solid var(--primary-color);">
+                    <h6 class="fw-bold mb-2" style="color: var(--primary-color);">Personalized Note:</h6>
+                    <p id="modal-note" class="text-muted fst-italic mb-0"></p>
+                </div>
+
+                <div class="mb-4">
+                    <h6 class="fw-bold text-dark">Ayurvedic Explanation:</h6>
+                    <p id="modal-desc" class="text-muted"></p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm p-3 bg-light">
+                            <h6 class="fw-bold text-success"><i class="fas fa-shield-alt me-2"></i> Preventive Tips</h6>
+                            <p id="modal-prevention" class="small text-muted mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm p-3 bg-light">
+                            <h6 class="fw-bold text-primary"><i class="fas fa-clock me-2"></i> Recommended Routine</h6>
+                            <p id="modal-routine" class="small text-muted mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6 class="fw-bold text-warning"><i class="fas fa-utensils me-2"></i> Dietary Suggestions</h6>
+                    <p id="modal-food" class="text-muted"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const monthSelect = document.getElementById('month-select');
+    let userDosha = 'Vata'; // Default
+
+    // 1. Detect Dosha
+    function detectDosha() {
+        // Check if backend passed a user dosha (injected via Jinja2)
+        const backendDosha = "{{ user_dosha if user_dosha else '' }}";
+
+        if (backendDosha) {
+            userDosha = backendDosha.split('-')[0]; // Handle dual doshas if needed, usually primary is enough or backend handles it
+            document.getElementById('user-dosha').innerHTML = `${userDosha} <small class="text-muted fs-6">(Profile)</small>`;
+        } else {
+            // Fallback to local storage for guests
+            const resultData = localStorage.getItem('ayurDoshaResult');
+            if (resultData) {
+                const result = JSON.parse(resultData);
+                userDosha = result.prakruti.split('-')[0];
+            }
+            document.getElementById('user-dosha').textContent = userDosha;
+        }
+
+        // Set current month and fetch
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const currentMonth = months[new Date().getMonth()];
+        monthSelect.value = currentMonth;
+
+        fetchRisk(currentMonth);
+    }
+
+    // 2. Fetch Risk Data
+    function fetchRisk(month) {
+        fetch(`/api/diseases?month=${month}&dosha=${userDosha}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('risk-display').style.display = 'block';
+                document.getElementById('season-dosha').textContent = data.season_dosha;
+
+                renderColumn('high-risk-container', data.high_risk, 'risk-high');
+                renderColumn('medium-risk-container', data.medium_risk, 'risk-medium');
+                renderColumn('low-risk-container', data.low_risk, 'risk-low');
+            })
+            .catch(err => console.error(err));
+    }
+
+    // 3. Render Columns
+    function renderColumn(containerId, diseases, riskClass) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        if (!diseases || diseases.length === 0) {
+            container.innerHTML = '<p class="text-center text-muted fst-italic">None</p>';
+            return;
+        }
+
+        diseases.forEach(d => {
+            const card = document.createElement('div');
+            card.className = `card border-0 shadow-sm mb-3 p-3 ${riskClass}-border`;
+            card.style.cursor = 'pointer';
+            card.style.transition = 'transform 0.2s';
+
+            // Add hover effect via JS or CSS class
+            card.onmouseover = () => card.style.transform = 'translateY(-3px)';
+            card.onmouseout = () => card.style.transform = 'translateY(0)';
+            card.onclick = () => openModal(d);
+
+            // Determine border color based on risk
+            let borderColor = '#4CAF50';
+            if (riskClass === 'risk-high') borderColor = '#D32F2F';
+            if (riskClass === 'risk-medium') borderColor = '#FF9800';
+
+            card.style.borderLeft = `5px solid ${borderColor}`;
+
+            card.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0 fw-bold text-dark">${d.name}</h6>
+                    <i class="fas fa-chevron-right text-muted small"></i>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 4. Modal Logic
+    function openModal(d) {
+        document.getElementById('modal-title').textContent = d.name;
+        document.getElementById('modal-desc').textContent = d.desc;
+        document.getElementById('modal-note').textContent = d.note;
+        document.getElementById('modal-prevention').textContent = d.prevention;
+        document.getElementById('modal-routine').textContent = d.routine;
+        document.getElementById('modal-food').textContent = d.food;
+
+        // Badges
+        const badgesDiv = document.getElementById('modal-badges');
+        let riskColor = d.risk_level === 'High' ? 'danger' : (d.risk_level === 'Medium' ? 'warning' : 'success');
+        badgesDiv.innerHTML = `
+            <span class="badge bg-${riskColor} me-2">${d.risk_level} Risk</span>
+            <span class="badge bg-secondary">${d.dosha_type} Disease</span>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById('diseaseModal'));
+        modal.show();
+    }
+
+    monthSelect.addEventListener('change', (e) => fetchRisk(e.target.value));
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', detectDosha);
+</script>
+{% endblock %}

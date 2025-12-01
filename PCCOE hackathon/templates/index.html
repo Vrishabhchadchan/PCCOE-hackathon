@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurveda Dosha Profiler</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="quiz-container" class="w-full max-w-2xl bg-white shadow-2xl rounded-xl p-8 md:p-12 border border-gray-100">
+        <h1 class="text-3xl font-extrabold text-[#006400] mb-2 text-center">
+            Prakriti Assessment
+        </h1>
+        <p class="text-center text-gray-500 mb-8">
+            Answer the following questions based on your natural tendencies *throughout your life* to determine your dominant Dosha (Vata, Pitta, Kapha).
+        </p>
+        
+        <form id="dosha-quiz-form" class="space-y-6">
+            
+            <!-- User Information Section -->
+            <div class="bg-indigo-50 p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl font-semibold text-indigo-700 mb-4 border-b pb-2">Your Profile</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="name" name="name" placeholder="Full Name" required class="w-full p-3 border border-indigo-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    <input type="email" id="email" name="email" placeholder="Email Address" required class="w-full p-3 border border-indigo-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    <select id="city" name="city" required class="w-full p-3 border border-indigo-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 md:col-span-2">
+                        <option value="">Select Primary City (Pune/Delhi)</option>
+                        <option value="Pune">Pune, Maharashtra</option>
+                        <option value="Delhi">Delhi, NCR</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Section -->
+            <div id="questions-section" class="space-y-8">
+                <!-- Questions will be injected here by JavaScript -->
+            </div>
+
+            <!-- Submit and Loader Section -->
+            <div class="pt-6 border-t border-gray-200">
+                <button type="submit" id="submit-button" class="w-full bg-[#006400] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-700 transition duration-300 transform hover:scale-[1.01] flex items-center justify-center">
+                    <span id="button-text">Submit Assessment & Create Profile</span>
+                    <svg id="loading-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Result/Message Box -->
+            <div id="message-box" class="hidden p-4 rounded-lg text-sm transition-all duration-300"></div>
+
+        </form>
+    </div>
+
+    <script>
+        // --- QUIZ DATA ---
+        // Each option is assigned a Dosha (V, P, or K) for scoring in the backend.
+        const quizData = [
+            {
+                q_id: "Q1",
+                question: "Which description best matches your natural body frame?",
+                options: [
+                    { value: "V", text: "Slim, light, often long or protruding joints." },
+                    { value: "P", text: "Medium, well-proportioned, tendency toward muscularity." },
+                    { value: "K", text: "Large, sturdy, well-developed, tends to gain weight easily." }
+                ]
+            },
+            {
+                q_id: "Q2",
+                question: "How is your digestion and appetite usually characterized?",
+                options: [
+                    { value: "V", text: "Irregular; sometimes skip meals, prone to gas/bloating." },
+                    { value: "P", text: "Strong; intense hunger, prone to heartburn if meals are delayed." },
+                    { value: "K", text: "Slow and steady; can skip meals easily, digestion feels heavy." }
+                ]
+            },
+            {
+                q_id: "Q3",
+                question: "What is your typical reaction to mental stress?",
+                options: [
+                    { value: "V", text: "Anxiety, worry, rapid or confused thoughts." },
+                    { value: "P", text: "Anger, irritability, sharp criticism, desire for immediate action." },
+                    { value: "K", text: "Withdrawal, emotional heaviness, lethargy, need for comfort." }
+                ]
+            },
+            {
+                q_id: "Q4",
+                question: "How do you typically handle changes in your routine?",
+                options: [
+                    { value: "V", text: "I love change and variety, but too much routine makes me restless." },
+                    { value: "P", text: "I enjoy planning and organizing; I dislike disorder or poor execution." },
+                    { value: "K", text: "I dislike changes and prefer a stable, comfortable routine." }
+                ]
+            },
+            {
+                q_id: "Q5",
+                question: "What is your skin type usually like?",
+                options: [
+                    { value: "V", text: "Dry, rough, thin, cool to the touch, and prone to flakiness." },
+                    { value: "P", text: "Oily, warm, sensitive, prone to redness, rashes, or moles." },
+                    { value: "K", text: "Moist, smooth, cool, thick, and well-hydrated." }
+                ]
+            },
+            {
+                q_id: "Q6",
+                question: "Which type of weather do you naturally prefer or enjoy the most?",
+                options: [
+                    { value: "V", text: "Warm and humid climates, I strongly dislike cold and wind." },
+                    { value: "P", text: "Cool or moderate weather, I strongly dislike intense heat." },
+                    { value: "K", text: "Dry and warm climates, I dislike cold, damp, or wet weather." }
+                ]
+            },
+            {
+                q_id: "Q7",
+                question: "How would you describe your ability to learn and remember things?",
+                options: [
+                    { value: "V", text: "I learn quickly, but I also forget quickly (good short-term, poor long-term)." },
+                    { value: "P", text: "I learn moderately and have a sharp, penetrating, and accurate memory." },
+                    { value: "K", text: "I learn slowly, but once I grasp something, I never forget it (excellent long-term)." }
+                ]
+            },
+            {
+                q_id: "Q8",
+                question: "How do you spend or manage money?",
+                options: [
+                    { value: "V", text: "I tend to spend impulsively and often worry about the expense later." },
+                    { value: "P", text: "I spend on quality, luxury, or status, often investing carefully." },
+                    { value: "K", text: "I am a natural saver and prefer to hold onto my wealth." }
+                ]
+            },
+        ];
+
+        const questionsSection = document.getElementById('questions-section');
+        const form = document.getElementById('dosha-quiz-form');
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const messageBox = document.getElementById('message-box');
+
+        // --- RENDER QUIZ ---
+        function renderQuiz() {
+            quizData.forEach((q, index) => {
+                const questionHtml = `
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md question-card">
+                        <p class="text-lg font-medium text-gray-800 mb-4">
+                            ${index + 1}. ${q.question}
+                        </p>
+                        <div class="space-y-3">
+                            ${q.options.map((opt) => `
+                                <label class="block cursor-pointer bg-white p-4 rounded-lg border border-gray-200 hover:border-[#006400] transition duration-150 shadow-sm has-[:checked]:bg-green-50 has-[:checked]:ring-2 has-[:checked]:ring-[#006400]">
+                                    <input type="radio" name="${q.q_id}" value="${opt.value}" required class="hidden">
+                                    <span class="text-gray-700 font-normal">${opt.text}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                questionsSection.innerHTML += questionHtml;
+            });
+        }
+
+        // --- SUBMIT HANDLER ---
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect user info and quiz answers
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                city: document.getElementById('city').value,
+                answers: {}
+            };
+
+            // Collect all radio button answers
+            quizData.forEach(q => {
+                const checked = document.querySelector(`input[name="${q.q_id}"]:checked`);
+                if (checked) {
+                    formData.answers[q.q_id] = checked.value;
+                }
+            });
+
+            // Basic validation check
+            if (!formData.name || !formData.email || !formData.city || Object.keys(formData.answers).length !== quizData.length) {
+                showMessage("Please ensure you have filled out all personal details and answered all quiz questions.", 'error');
+                return;
+            }
+
+            // Show loading state
+            submitButton.disabled = true;
+            buttonText.textContent = 'Processing...';
+            loadingSpinner.classList.remove('hidden');
+            messageBox.classList.add('hidden');
+
+            try {
+                // The URL is relative, Flask handles the routing
+                const response = await fetch('/submit-quiz', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Success message showing the calculated Dosha
+                    showMessage(`✅ Success! Your Dosha Profile has been created. Dominant Dosha: ${result.prakruti_dosha}. You are ready for personalized recommendations!`, 'success');
+                    // Optionally disable the form after success
+                    // form.reset(); 
+                    // document.getElementById('questions-section').innerHTML = ''; // Clear questions
+                } else {
+                    // Handle API errors (e.g., duplicate email from database)
+                    showMessage(`Error: ${result.error || 'Failed to process request.'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showMessage('Network Error: Could not connect to the backend server.', 'error');
+            } finally {
+                // Restore button state
+                submitButton.disabled = false;
+                buttonText.textContent = 'Submit Assessment & Create Profile';
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+
+        // --- UTILITY FUNCTION ---
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'border', 'border-red-200', 'border-green-200');
+            
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'border', 'border-green-200');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-200');
+            }
+        }
+        
+        // Initialize the quiz when the script loads
+        renderQuiz();
+    </script>
+</body>
+</html>

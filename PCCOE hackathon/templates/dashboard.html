@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - AyurDosha Pro+{% endblock %}
+
+{% block content %}
+<section style="padding: 50px 0;">
+    <div class="container">
+        <h1 style="color: var(--primary-color);">Welcome, {{ user['name'] }}</h1>
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px;">
+            <!-- Profile Summary -->
+            <div class="card"
+                style="background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <h2>Your Profile</h2>
+                {% if user['prakruti'] %}
+                <p><strong>Dosha:</strong> {{ user['prakruti'] }}</p>
+                <div style="margin: 10px 0; font-size: 0.9rem; color: #555;">
+                    <p>Age: {{ user['age'] }} | Gender: {{ user['gender'] }} | Weight: {{ user['weight'] }} kg</p>
+                    <p>City: {{ user['city'] }}</p>
+                </div>
+                <p>Vata: {{ user['vata_score'] }}% | Pitta: {{ user['pitta_score'] }}% | Kapha: {{ user['kapha_score']
+                    }}%</p>
+                <a href="/result" class="btn btn-primary" style="margin-top: 10px; font-size: 0.9rem;">View Full
+                    Report</a>
+                {% else %}
+                <p>You haven't taken the quiz yet.</p>
+                <a href="/questionnaire" class="btn btn-primary" style="margin-top: 10px;">Take Quiz</a>
+                {% endif %}
+            </div>
+
+            <!-- Climate Risk Widget -->
+            <div class="card"
+                style="background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <h2>Today's Climate Risk</h2>
+                <div id="dashboard-climate-loading">Loading...</div>
+                <div id="dashboard-climate-content" style="display: none;">
+                    <h3 id="dash-risk-level" style="margin: 10px 0;">--</h3>
+                    <p id="dash-risk-desc" style="font-size: 0.9rem;">--</p>
+                    <a href="/climate-impact" class="btn btn-primary"
+                        style="margin-top: 10px; background: #006064; border: none;">View Full Dashboard</a>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card"
+                style="background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <h2>Quick Actions</h2>
+                <ul style="list-style: none; margin-top: 15px;">
+                    <li style="margin-bottom: 10px;"><a href="/climate-impact"
+                            style="color: var(--text-color); text-decoration: none;">🌤️ Climate Impact</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/seasonal"
+                            style="color: var(--text-color); text-decoration: none;">🍂 Check Seasonal Risks</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/diseases"
+                            style="color: var(--text-color); text-decoration: none;">🏥 Disease Mapping</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/exercise"
+                            style="color: var(--text-color); text-decoration: none;">🧘‍♀️ Exercise Routine</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/history"
+                            style="color: var(--text-color); text-decoration: none;">📜 View History</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/climate-risk')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('dashboard-climate-loading').style.display = 'none';
+                document.getElementById('dashboard-climate-content').style.display = 'block';
+
+                const riskLevel = data.risk_level;
+                const riskEl = document.getElementById('dash-risk-level');
+                riskEl.textContent = riskLevel + " Risk";
+
+                if (riskLevel === 'High') riskEl.style.color = '#D32F2F';
+                else if (riskLevel === 'Medium') riskEl.style.color = '#F57C00';
+                else riskEl.style.color = '#388E3C';
+
+                document.getElementById('dash-risk-desc').textContent = `Current weather in ${data.city} has a ${riskLevel.toLowerCase()} impact on your ${data.user_dosha} dosha.`;
+            })
+            .catch(err => {
+                document.getElementById('dashboard-climate-loading').textContent = "Unavailable";
+            });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}AyurDosha Pro - Wellness through Nature{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="position: relative; padding: 120px 0 80px; overflow: hidden;">
+    <!-- Animated Background Elements -->
+    <div style="position: absolute; top: 10%; left: 5%; opacity: 0.1; animation: float 6s ease-in-out infinite;">
+        <i class="fas fa-wind fa-4x text-primary"></i>
+    </div>
+    <div
+        style="position: absolute; top: 20%; right: 10%; opacity: 0.1; animation: float 8s ease-in-out infinite reverse;">
+        <i class="fas fa-sun fa-5x text-warning"></i>
+    </div>
+    <div style="position: absolute; bottom: 15%; left: 15%; opacity: 0.1; animation: float 7s ease-in-out infinite;">
+        <i class="fas fa-leaf fa-3x text-success"></i>
+    </div>
+
+    <div class="container text-center" style="position: relative; z-index: 2;">
+        <h1 class="display-3 mb-4 animate-fade-in" style="font-weight: 700; color: var(--primary-color);">
+            Harmonize Your Life with <br> <span class="text-gradient">Ayurveda & Nature</span>
+        </h1>
+        <p class="lead mb-5 animate-fade-in"
+            style="max-width: 700px; margin: 0 auto; color: var(--text-light); animation-delay: 0.2s;">
+            Discover your unique Dosha profile and receive real-time health recommendations based on your body type and
+            the changing climate around you.
+        </p>
+        <div class="d-flex justify-content-center gap-3 animate-fade-in" style="animation-delay: 0.4s;">
+            <a href="/questionnaire" class="btn btn-primary btn-lg">Start Profiling</a>
+            <a href="/climate-impact" class="btn btn-outline btn-lg">Check Climate Risk</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section" style="padding: 80px 0; background: var(--white);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 style="color: var(--primary-color);">Your Ayurvedic Wellness Starts Here</h2>
+            <p class="text-muted">A holistic approach combining ancient wisdom with modern climate science.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4 border-0 shadow-sm hover-lift">
+                    <div class="mb-4"
+                        style="width: 80px; height: 80px; background: #EFEBE9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <i class="fas fa-user-check fa-2x" style="color: var(--primary-color);"></i>
+                    </div>
+                    <h4>Know Your Dosha</h4>
+                    <p class="text-muted">Take our comprehensive quiz to identify your Vata, Pitta, or Kapha
+                        constitution.</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4 border-0 shadow-sm hover-lift">
+                    <div class="mb-4"
+                        style="width: 80px; height: 80px; background: #E1F5FE; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <i class="fas fa-cloud-sun-rain fa-2x" style="color: #0288D1;"></i>
+                    </div>
+                    <h4>Climate Integration</h4>
+                    <p class="text-muted">Real-time weather analysis to warn you of environmental risks specific to your
+                        body type.</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4 border-0 shadow-sm hover-lift">
+                    <div class="mb-4"
+                        style="width: 80px; height: 80px; background: #E8F5E9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <i class="fas fa-heartbeat fa-2x" style="color: #388E3C;"></i>
+                    </div>
+                    <h4>Personalized Care</h4>
+                    <p class="text-muted">Get diet, routine, and exercise plans tailored to balance your Dosha in any
+                        season.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Climate Preview Section -->
+<section class="climate-preview" style="padding: 80px 0; background: linear-gradient(135deg, #fdfbf7 0%, #fff 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="glass-panel p-5">
+                    <h2 class="mb-4">How Weather Affects You</h2>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-wind fa-2x me-3 text-secondary"></i>
+                        <div>
+                            <h5 class="mb-0">Vata</h5>
+                            <small class="text-muted">Aggravated by Cold, Dry, Wind</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-fire fa-2x me-3 text-danger"></i>
+                        <div>
+                            <h5 class="mb-0">Pitta</h5>
+                            <small class="text-muted">Aggravated by Heat, Sun</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-water fa-2x me-3 text-primary"></i>
+                        <div>
+                            <h5 class="mb-0">Kapha</h5>
+                            <small class="text-muted">Aggravated by Cold, Damp, Rain</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <h2 class="mb-3">Stay Balanced in Every Season</h2>
+                <p class="lead text-muted mb-4">Our algorithms analyze local weather data to provide you with daily
+                    health forecasts.</p>
+                <a href="/climate-impact" class="btn btn-primary">View Live Dashboard <i
+                        class="fas fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
+{% endblock %}

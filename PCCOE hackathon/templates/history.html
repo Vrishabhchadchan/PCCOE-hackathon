@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}History - AyurDosha Pro+{% endblock %}
+
+{% block content %}
+<section style="padding: 50px 0;">
+    <div class="container">
+        <h1 style="color: var(--primary-color);">Your Activity History</h1>
+
+        <div
+            style="background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-top: 30px;">
+            {% if logs %}
+            <ul style="list-style: none;">
+                {% for log in logs %}
+                <li style="border-bottom: 1px solid #eee; padding: 15px 0;">
+                    <span style="font-size: 0.8rem; color: #888;">{{ log['timestamp'] }}</span><br>
+                    <strong>{{ log['type'] }}:</strong> {{ log['content'] }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No history found.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

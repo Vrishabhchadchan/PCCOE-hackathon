@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Your Profile - AyurDosha Pro{% endblock %}
+
+{% block content %}
+<section class="result-section" style="padding: 50px 0;">
+    <div class="container" style="text-align: center;">
+        <h1 style="color: var(--primary-color);">Your Ayurvedic Profile</h1>
+        <p>Based on your answers, here is your Dosha breakdown.</p>
+
+        <div id="result-loading">Loading your results...</div>
+
+        <div id="result-content" style="display: none; margin-top: 40px;">
+            <div
+                style="background: var(--white); padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto;">
+                <h2 id="prakruti-title" style="font-size: 2.5rem; color: var(--text-color); margin-bottom: 20px;"></h2>
+                <p id="prakruti-desc" style="font-size: 1.2rem; margin-bottom: 40px;"></p>
+
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+                    <div class="score-card">
+                        <h3 style="color: #64B5F6;">Vata</h3> <!-- Air/Ether color -->
+                        <div class="progress-bar"
+                            style="width: 100px; height: 100px; border-radius: 50%; border: 5px solid #eee; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                            <span id="vata-score" style="font-size: 1.5rem; font-weight: bold;">0%</span>
+                        </div>
+                    </div>
+                    <div class="score-card">
+                        <h3 style="color: #E57373;">Pitta</h3> <!-- Fire color -->
+                        <div class="progress-bar"
+                            style="width: 100px; height: 100px; border-radius: 50%; border: 5px solid #eee; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                            <span id="pitta-score" style="font-size: 1.5rem; font-weight: bold;">0%</span>
+                        </div>
+                    </div>
+                    <div class="score-card">
+                        <h3 style="color: #81C784;">Kapha</h3> <!-- Earth/Water color -->
+                        <div class="progress-bar"
+                            style="width: 100px; height: 100px; border-radius: 50%; border: 5px solid #eee; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                            <span id="kapha-score" style="font-size: 1.5rem; font-weight: bold;">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; text-align: left;">
+                    <h3>Recommendations</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-top: 10px;">
+                        <li>Check the <a href="/seasonal" style="color: var(--primary-color);">Seasonal Risk</a> page
+                            for current advice.</li>
+                        <li>Visit the <a href="/exercise" style="color: var(--primary-color);">Exercise</a> page for a
+                            workout plan.</li>
+                        <li>Ask <strong>AyurBot</strong> for specific diet tips!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if server-side user data is available (injected via Jinja2)
+        const userPrakruti = "{{ user['prakruti'] if user else '' }}";
+        const userVata = "{{ user['vata_score'] if user else '' }}";
+        const userPitta = "{{ user['pitta_score'] if user else '' }}";
+        const userKapha = "{{ user['kapha_score'] if user else '' }}";
+
+        let result = null;
+
+        if (userPrakruti) {
+            // Use server data
+            result = {
+                prakruti: userPrakruti,
+                scores: {
+                    Vata: userVata,
+                    Pitta: userPitta,
+                    Kapha: userKapha
+                }
+            };
+        } else {
+            // Fallback to localStorage for guests
+            const resultData = localStorage.getItem('ayurDoshaResult');
+            if (resultData) {
+                result = JSON.parse(resultData);
+            }
+        }
+
+        if (!result) {
+            // No data found, redirect to quiz
+            window.location.href = '/questionnaire';
+            return;
+        }
+
+        document.getElementById('result-loading').style.display = 'none';
+        document.getElementById('result-content').style.display = 'block';
+
+        document.getElementById('prakruti-title').textContent = result.prakruti;
+        document.getElementById('vata-score').textContent = result.scores.Vata + '%';
+        document.getElementById('pitta-score').textContent = result.scores.Pitta + '%';
+        document.getElementById('kapha-score').textContent = result.scores.Kapha + '%';
+
+        // Simple descriptions
+        const descriptions = {
+            'Vata': 'You are energetic and creative, but prone to anxiety and dryness. Balance with warmth and stability.',
+            'Pitta': 'You are ambitious and sharp, but prone to anger and inflammation. Balance with cooling and calming activities.',
+            'Kapha': 'You are calm and steady, but prone to lethargy and weight gain. Balance with stimulation and movement.',
+            'Vata-Pitta': 'You have a mix of air and fire. You need to balance your energy and intensity.',
+            'Pitta-Kapha': 'You have a mix of fire and earth. You need to stay active but cool.',
+            'Vata-Kapha': 'You have a mix of air and earth. You need warmth and stimulation.',
+            'Tridoshic': 'You have a rare balance of all three energies. Maintain it with mindfulness.'
+        };
+
+        document.getElementById('prakruti-desc').textContent = descriptions[result.prakruti] || 'Your unique constitution.';
+    });
+</script>
+{% endblock %}

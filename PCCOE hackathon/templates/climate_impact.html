@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% block title %}Climate Impact - AyurDosha Pro{% endblock %}
+
+{% block content %}
+<section id="climate-dashboard" style="padding: 50px 0; min-height: 80vh; transition: background 1s ease;">
+    <div class="container">
+        <div class="text-center mb-5 animate-fade-in">
+            <h1 class="text-gradient mb-3">Climate-Integrated Health Dashboard</h1>
+            <p class="text-muted">Real-time analysis of how today's weather impacts your Dosha.</p>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">Fetching real-time climate data...</p>
+        </div>
+
+        <div id="climate-content" style="display: none;">
+
+            <!-- Top Row: Location & Risk Score -->
+            <div class="row mb-5 g-4">
+                <div class="col-md-6 animate-fade-in" style="animation-delay: 0.1s;">
+                    <div class="card h-100 border-0"
+                        style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white;">
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div>
+                                <h4 class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> <span
+                                        id="city-name">Loading...</span></h4>
+                                <small class="opacity-75" id="current-date">--</small>
+                            </div>
+                            <div class="text-end">
+                                <i id="weather-icon" class="fas fa-cloud-sun fa-3x opacity-75"></i>
+                            </div>
+                        </div>
+                        <div class="mt-auto">
+                            <h1 class="display-2 fw-bold mb-0" id="current-temp">--°C</h1>
+                            <p class="fs-5 opacity-75" id="weather-desc">Unknown</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 animate-fade-in" style="animation-delay: 0.2s;">
+                    <div class="card h-100 text-center border-0">
+                        <h5 class="text-muted mb-4">Dosha-Climate Imbalance Score</h5>
+                        <div class="risk-circle" id="risk-circle">
+                            <span id="risk-level">--</span>
+                        </div>
+                        <p class="mt-4 text-muted" id="risk-text">Calculating risk based on your Dosha...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Climate Cards Grid -->
+            <h3 class="mb-4 animate-fade-in" style="color: var(--secondary-color);">Environmental Factors</h3>
+            <div class="row g-4 mb-5">
+                <!-- Temperature -->
+                <div class="col-6 col-md-3 animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="climate-card h-100" onclick="showClimateDetail('Temperature')">
+                        <i class="fas fa-thermometer-half fa-2x text-danger mb-3"></i>
+                        <h6 class="text-muted">Temperature</h6>
+                        <h3 id="card-temp" style="color: var(--text-dark);">--</h3>
+                        <small class="text-muted">Click for impact</small>
+                    </div>
+                </div>
+                <!-- Humidity -->
+                <div class="col-6 col-md-3 animate-fade-in" style="animation-delay: 0.4s;">
+                    <div class="climate-card h-100" onclick="showClimateDetail('Humidity')">
+                        <i class="fas fa-tint fa-2x text-info mb-3"></i>
+                        <h6 class="text-muted">Humidity</h6>
+                        <h3 id="card-humidity" style="color: var(--text-dark);">--%</h3>
+                        <small class="text-muted">Click for impact</small>
+                    </div>
+                </div>
+                <!-- Wind -->
+                <div class="col-6 col-md-3 animate-fade-in" style="animation-delay: 0.5s;">
+                    <div class="climate-card h-100" onclick="showClimateDetail('Wind')">
+                        <i class="fas fa-wind fa-2x text-secondary mb-3"></i>
+                        <h6 class="text-muted">Wind Speed</h6>
+                        <h3 id="card-wind" style="color: var(--text-dark);">-- km/h</h3>
+                        <small class="text-muted">Click for impact</small>
+                    </div>
+                </div>
+                <!-- Rain/Precipitation -->
+                <div class="col-6 col-md-3 animate-fade-in" style="animation-delay: 0.6s;">
+                    <div class="climate-card h-100" onclick="showClimateDetail('Rain')">
+                        <i class="fas fa-cloud-rain fa-2x text-primary mb-3"></i>
+                        <h6 class="text-muted">Rainfall</h6>
+                        <h3 id="card-rain" style="color: var(--text-dark);">-- mm</h3>
+                        <small class="text-muted">Click for impact</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations Section -->
+            <div class="row mb-5 animate-fade-in" style="animation-delay: 0.7s;">
+                <div class="col-md-12">
+                    <div class="card border-0 overflow-hidden">
+                        <div class="card-header text-white p-3" style="background: var(--primary-color);">
+                            <h5 class="mb-0"><i class="fas fa-leaf me-2"></i> Today's Climate-Adapted Recommendations
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-4">
+                                <div class="col-md-4 border-end-md">
+                                    <h6 class="fw-bold mb-3" style="color: var(--primary-color);">Diet</h6>
+                                    <ul id="rec-diet" class="list-unstyled small text-muted">
+                                        <li>Loading...</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4 border-end-md">
+                                    <h6 class="fw-bold mb-3" style="color: var(--secondary-color);">Routine</h6>
+                                    <ul id="rec-routine" class="list-unstyled small text-muted">
+                                        <li>Loading...</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="fw-bold mb-3" style="color: #F57C00;">Exercise</h6>
+                                    <ul id="rec-exercise" class="list-unstyled small text-muted">
+                                        <li>Loading...</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7-Day Forecast Slider -->
+            <h3 class="mb-4 animate-fade-in" style="color: var(--secondary-color);">7-Day Climate Forecast</h3>
+            <div class="forecast-container d-flex overflow-auto pb-4 mb-5 animate-fade-in"
+                style="gap: 15px; scroll-behavior: smooth;">
+                <!-- Forecast items will be injected here -->
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Climate Detail Modal -->
+<div class="modal fade" id="climateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header text-white"
+                style="background: var(--primary-color); border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                <h5 class="modal-title" id="climateModalLabel">Climate Factor Detail</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p id="modal-desc" class="lead fs-6 mb-4">Loading details...</p>
+                <div class="p-3 rounded" style="background: #f9f9f9; border-left: 4px solid var(--secondary-color);">
+                    <h6 class="fw-bold mb-2" style="color: var(--primary-color);">Why this affects you:</h6>
+                    <p id="modal-reason" class="text-muted small mb-0">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchClimateRisk();
+    });
+
+    let globalData = null;
+
+    function fetchClimateRisk() {
+        fetch('/api/climate-risk')
+            .then(response => response.json())
+            .then(data => {
+                globalData = data;
+                renderDashboard(data);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('climate-content').style.display = 'block';
+                updateBackground(data.climate_data.current);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').innerHTML = '<p class="text-danger">Failed to load climate data.</p>';
+            });
+    }
+
+    function updateBackground(current) {
+        const section = document.getElementById('climate-dashboard');
+        const temp = current.temperature_2m;
+        const rain = current.rain;
+
+        if (rain > 0) {
+            section.style.background = 'linear-gradient(to bottom, #e3f2fd, #bbdefb)'; // Rainy/Cool
+        } else if (temp > 30) {
+            section.style.background = 'linear-gradient(to bottom, #fff3e0, #ffe0b2)'; // Hot/Sunny
+        } else if (temp < 15) {
+            section.style.background = 'linear-gradient(to bottom, #e8eaf6, #c5cae9)'; // Cold
+        } else {
+            section.style.background = 'linear-gradient(to bottom, #f1f8e9, #dcedc8)'; // Pleasant/Green
+        }
+    }
+
+    function renderDashboard(data) {
+        // 1. Top Card
+        document.getElementById('city-name').textContent = data.city;
+        const current = data.climate_data.current;
+        document.getElementById('current-temp').textContent = `${current.temperature_2m}°C`;
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Weather Desc & Icon
+        const wCode = current.weather_code;
+        let wDesc = "Clear Sky";
+        let wIcon = "fa-sun";
+
+        if (wCode > 3) { wDesc = "Cloudy"; wIcon = "fa-cloud"; }
+        if (wCode > 50) { wDesc = "Rainy"; wIcon = "fa-cloud-showers-heavy"; }
+        if (wCode > 70) { wDesc = "Snowy"; wIcon = "fa-snowflake"; }
+        if (wCode > 95) { wDesc = "Thunderstorm"; wIcon = "fa-bolt"; }
+
+        document.getElementById('weather-desc').textContent = wDesc;
+        document.getElementById('weather-icon').className = `fas ${wIcon} fa-3x opacity-75`;
+
+
+        // 2. Risk Meter
+        const riskEl = document.getElementById('risk-circle');
+        const riskText = document.getElementById('risk-level');
+        const riskDesc = document.getElementById('risk-text');
+
+        riskText.textContent = data.risk_level;
+        riskEl.className = `risk-circle risk-${data.risk_level.toLowerCase()}`;
+
+        if (data.risk_level === 'High') {
+            riskDesc.textContent = `Warning: Current weather significantly aggravates your ${data.user_dosha} Dosha.`;
+        } else if (data.risk_level === 'Medium') {
+            riskDesc.textContent = `Caution: Moderate influence on your ${data.user_dosha} balance.`;
+        } else {
+            riskDesc.textContent = `Good: Weather is favorable for your ${data.user_dosha} constitution.`;
+        }
+
+        // 3. Climate Cards
+        document.getElementById('card-temp').textContent = `${current.temperature_2m}°C`;
+        document.getElementById('card-humidity').textContent = `${current.relative_humidity_2m}%`;
+        document.getElementById('card-wind').textContent = `${current.wind_speed_10m} km/h`;
+        document.getElementById('card-rain').textContent = `${current.rain} mm`;
+
+        // 4. Recommendations
+        generateRecommendations(data);
+
+        // 5. Forecast
+        const forecastContainer = document.querySelector('.forecast-container');
+        const daily = data.climate_data.daily;
+        let forecastHTML = '';
+
+        for (let i = 0; i < daily.time.length; i++) {
+            const date = new Date(daily.time[i]).toLocaleDateString('en-US', { weekday: 'short' });
+            const maxTemp = daily.temperature_2m_max[i];
+            let icon = 'fa-sun text-warning';
+            if (daily.rain_sum && daily.rain_sum[i] > 0) icon = 'fa-cloud-rain text-primary';
+
+            forecastHTML += `
+            <div class="card border-0 shadow-sm p-3 text-center" style="min-width: 120px; border-radius: 15px;">
+                <small class="text-muted mb-2 d-block">${date}</small>
+                <div class="mb-2"><i class="fas ${icon}"></i></div>
+                <strong style="color: var(--text-dark);">${maxTemp}°</strong>
+                <small class="d-block text-muted">${daily.temperature_2m_min[i]}°</small>
+            </div>
+        `;
+        }
+        forecastContainer.innerHTML = forecastHTML;
+    }
+
+    function generateRecommendations(data) {
+        const userDosha = data.user_dosha;
+        const impact = data.impact_factors;
+
+        let diet = [];
+        let routine = [];
+        let exercise = [];
+
+        // Logic based on Dosha & Impact
+        if (impact[userDosha] > 0 || data.risk_level === 'High') {
+            // Aggravated state
+            if (userDosha.includes('Vata')) {
+                diet.push("Warm, oily, cooked foods (soups, stews).");
+                diet.push("Avoid cold salads and dry snacks.");
+                routine.push("Self-massage with warm sesame oil.");
+                routine.push("Keep warm, avoid drafts.");
+                exercise.push("Gentle Yoga (Sun Salutations).");
+            }
+            if (userDosha.includes('Pitta')) {
+                diet.push("Cooling foods (cucumber, melon, coconut).");
+                diet.push("Avoid spicy and fried foods.");
+                routine.push("Avoid midday sun.");
+                routine.push("Moonlight walks.");
+                exercise.push("Swimming or slow jogging.");
+            }
+            if (userDosha.includes('Kapha')) {
+                diet.push("Light, warm, spicy foods.");
+                diet.push("Avoid dairy and heavy sweets.");
+                routine.push("Wake up early (before 6 AM).");
+                routine.push("Dry brushing.");
+                exercise.push("Vigorous cardio or running.");
+            }
+        } else {
+            // Balanced state
+            diet.push("Follow standard seasonal diet for " + userDosha + ".");
+            routine.push("Maintain regular sleep schedule.");
+            exercise.push("Regular moderate exercise.");
+        }
+
+        document.getElementById('rec-diet').innerHTML = diet.map(i => `<li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>${i}</li>`).join('');
+        document.getElementById('rec-routine').innerHTML = routine.map(i => `<li class="mb-2"><i class="fas fa-clock text-primary me-2"></i>${i}</li>`).join('');
+        document.getElementById('rec-exercise').innerHTML = exercise.map(i => `<li class="mb-2"><i class="fas fa-running text-warning me-2"></i>${i}</li>`).join('');
+    }
+
+    function showClimateDetail(factor) {
+        const modal = new bootstrap.Modal(document.getElementById('climateModal'));
+        const title = document.getElementById('climateModalLabel');
+        const desc = document.getElementById('modal-desc');
+        const reason = document.getElementById('modal-reason');
+
+        title.textContent = `${factor} Impact`;
+
+        // Dynamic content based on factor and user dosha
+        const dosha = globalData.user_dosha;
+
+        if (factor === 'Temperature') {
+            desc.textContent = "Temperature directly affects the body's internal heat (Pitta) and dryness (Vata).";
+            reason.textContent = `As a ${dosha} type, extreme temperatures can disrupt your balance. Cold increases Vata/Kapha, while Heat increases Pitta.`;
+        } else if (factor === 'Humidity') {
+            desc.textContent = "Humidity influences the body's moisture levels and heaviness (Kapha).";
+            reason.textContent = `High humidity can aggravate Kapha (heaviness) and Pitta (sweating), while low humidity aggravates Vata (dryness).`;
+        } else if (factor === 'Wind') {
+            desc.textContent = "Wind is a direct manifestation of Vata (Air + Ether).";
+            reason.textContent = `High winds significantly increase Vata dosha, leading to anxiety, dryness, and restlessness.`;
+        } else if (factor === 'Rain') {
+            desc.textContent = "Rain brings coolness and dampness, affecting Vata and Kapha.";
+            reason.textContent = `Rainy weather (Varsha Ritu) typically aggravates Vata due to cooling, but also Kapha due to dampness.`;
+        }
+
+        modal.show();
+    }
+</script>
+{% endblock %}

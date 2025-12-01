@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - AyurDosha Pro+{% endblock %}
+
+{% block content %}
+<section style="padding: 50px 0;">
+    <div class="container" style="max-width: 400px;">
+        <h1 style="text-align: center; color: var(--primary-color);">Sign Up</h1>
+        <form id="signup-form"
+            style="background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Name</label>
+                <input type="text" name="name" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Email</label>
+                <input type="email" name="email" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Password</label>
+                <input type="password" name="password" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+            <p style="text-align: center; margin-top: 15px;">Already have an account? <a href="/login">Login</a></p>
+        </form>
+    </div>
+</section>
+
+<script>
+    document.getElementById('signup-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    alert('Account created! Please login.');
+                    window.location.href = '/login';
+                } else {
+                    alert(result.error);
+                }
+            });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Know Your Dosha - AyurDosha Pro{% endblock %}
+
+{% block content %}
+<section class="dosha-info-section" style="padding: 60px 0; min-height: 80vh;">
+    <div class="container">
+        <div class="text-center mb-5 animate-fade-in">
+            <h1 class="text-gradient mb-3">Understand Your Constitution</h1>
+            <p class="text-muted lead">Explore the three fundamental energies that govern your body and mind.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Vata Card -->
+            <div class="col-md-4 animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift">
+                    <div class="p-4 text-center text-white"
+                        style="background: linear-gradient(135deg, #90CAF9, #1565C0);">
+                        <div class="mb-3 bg-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-wind fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="mb-1">Vata</h3>
+                        <p class="mb-0 opacity-75">Air + Ether</p>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="accordion accordion-flush" id="accordionVata">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingVata1">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseVata1">
+                                        Characteristics
+                                    </button>
+                                </h2>
+                                <div id="collapseVata1" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionVata">
+                                    <div class="accordion-body text-muted small">
+                                        Creative, energetic, quick learner. Light frame, dry skin, sensitive digestion.
+                                        Prone to anxiety and cold.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingVata2">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseVata2">
+                                        Imbalance Signs
+                                    </button>
+                                </h2>
+                                <div id="collapseVata2" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionVata">
+                                    <div class="accordion-body text-muted small">
+                                        Dry skin, bloating, constipation, insomnia, anxiety, restlessness, joint pain.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingVata3">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseVata3">
+                                        Diet & Lifestyle
+                                    </button>
+                                </h2>
+                                <div id="collapseVata3" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionVata">
+                                    <div class="accordion-body text-muted small">
+                                        <strong>Favor:</strong> Warm, oily, cooked foods. Sweet, sour, salty tastes.<br>
+                                        <strong>Avoid:</strong> Cold, dry, raw foods. Pungent, bitter, astringent
+                                        tastes.<br>
+                                        <strong>Routine:</strong> Regular sleep, warm oil massage, gentle yoga.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pitta Card -->
+            <div class="col-md-4 animate-fade-in" style="animation-delay: 0.3s;">
+                <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift">
+                    <div class="p-4 text-center text-white"
+                        style="background: linear-gradient(135deg, #FFCC80, #E65100);">
+                        <div class="mb-3 bg-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-fire fa-2x text-warning"></i>
+                        </div>
+                        <h3 class="mb-1">Pitta</h3>
+                        <p class="mb-0 opacity-75">Fire + Water</p>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="accordion accordion-flush" id="accordionPitta">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingPitta1">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapsePitta1">
+                                        Characteristics
+                                    </button>
+                                </h2>
+                                <div id="collapsePitta1" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionPitta">
+                                    <div class="accordion-body text-muted small">
+                                        Intelligent, focused, strong digestion. Medium build, warm skin. Prone to anger
+                                        and overheating.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingPitta2">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapsePitta2">
+                                        Imbalance Signs
+                                    </button>
+                                </h2>
+                                <div id="collapsePitta2" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionPitta">
+                                    <div class="accordion-body text-muted small">
+                                        Acid reflux, skin rashes, inflammation, anger, irritability, excessive heat.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingPitta3">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapsePitta3">
+                                        Diet & Lifestyle
+                                    </button>
+                                </h2>
+                                <div id="collapsePitta3" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionPitta">
+                                    <div class="accordion-body text-muted small">
+                                        <strong>Favor:</strong> Cooling, raw, sweet foods. Sweet, bitter, astringent
+                                        tastes.<br>
+                                        <strong>Avoid:</strong> Hot, spicy, fried foods. Pungent, sour, salty
+                                        tastes.<br>
+                                        <strong>Routine:</strong> Stay cool, avoid midday sun, swimming, meditation.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kapha Card -->
+            <div class="col-md-4 animate-fade-in" style="animation-delay: 0.4s;">
+                <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift">
+                    <div class="p-4 text-center text-white"
+                        style="background: linear-gradient(135deg, #A5D6A7, #2E7D32);">
+                        <div class="mb-3 bg-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;">
+                            <i class="fas fa-water fa-2x text-success"></i>
+                        </div>
+                        <h3 class="mb-1">Kapha</h3>
+                        <p class="mb-0 opacity-75">Earth + Water</p>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="accordion accordion-flush" id="accordionKapha">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingKapha1">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseKapha1">
+                                        Characteristics
+                                    </button>
+                                </h2>
+                                <div id="collapseKapha1" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionKapha">
+                                    <div class="accordion-body text-muted small">
+                                        Calm, loyal, strong endurance. Heavy build, smooth skin. Prone to lethargy and
+                                        weight gain.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingKapha2">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseKapha2">
+                                        Imbalance Signs
+                                    </button>
+                                </h2>
+                                <div id="collapseKapha2" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionKapha">
+                                    <div class="accordion-body text-muted small">
+                                        Weight gain, congestion, lethargy, depression, excessive sleep, water retention.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingKapha3">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseKapha3">
+                                        Diet & Lifestyle
+                                    </button>
+                                </h2>
+                                <div id="collapseKapha3" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionKapha">
+                                    <div class="accordion-body text-muted small">
+                                        <strong>Favor:</strong> Light, dry, warm foods. Pungent, bitter, astringent
+                                        tastes.<br>
+                                        <strong>Avoid:</strong> Heavy, oily, sweet foods. Sweet, sour, salty tastes.<br>
+                                        <strong>Routine:</strong> Wake up early, vigorous exercise, variety in routine.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

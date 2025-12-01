@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Disease Mapping - AyurDosha Pro+{% endblock %}
+
+{% block content %}
+<section style="padding: 50px 0;">
+    <div class="container">
+        <h1 style="text-align: center; color: var(--primary-color);">Disease Mapping</h1>
+        <p style="text-align: center; margin-bottom: 40px;">Understand health risks based on your Dosha and the Season.
+        </p>
+
+        <div
+            style="max-width: 600px; margin: 0 auto; background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Select Dosha</label>
+                <select id="dosha-select"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="Vata">Vata</option>
+                    <option value="Pitta">Pitta</option>
+                    <option value="Kapha">Kapha</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Select Month</label>
+                <select id="month-select"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="January">January</option>
+                    <option value="July">July</option>
+                    <!-- Add all months -->
+                </select>
+            </div>
+            <button onclick="checkDiseases()" class="btn btn-primary" style="width: 100%;">Check Risks</button>
+
+            <div id="disease-results" style="margin-top: 30px; display: none;">
+                <h3>High Risk Diseases:</h3>
+                <ul id="risk-list" style="margin-left: 20px; margin-bottom: 20px;"></ul>
+                <h3>Preventive Tips:</h3>
+                <ul id="preventive-list" style="margin-left: 20px;"></ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function checkDiseases() {
+        const dosha = document.getElementById('dosha-select').value;
+        const month = document.getElementById('month-select').value;
+
+        fetch(`/api/diseases?dosha=${dosha}&month=${month}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('disease-results').style.display = 'block';
+
+                const riskList = document.getElementById('risk-list');
+                riskList.innerHTML = '';
+                data.high_risk.forEach(item => {
+                    riskList.innerHTML += `<li>${item}</li>`;
+                });
+
+                const prevList = document.getElementById('preventive-list');
+                prevList.innerHTML = '';
+                data.preventive.forEach(item => {
+                    prevList.innerHTML += `<li>${item}</li>`;
+                });
+            });
+    }
+</script>
+{% endblock %}

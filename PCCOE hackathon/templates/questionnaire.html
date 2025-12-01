@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Dosha Quiz - AyurDosha Pro{% endblock %}
+
+{% block content %}
+<section class="quiz-section" style="padding: 50px 0;">
+    <div class="container">
+        <h1 style="text-align: center; color: var(--primary-color);">Discover Your Dosha</h1>
+        <p style="text-align: center; margin-bottom: 40px;">Answer the following questions honestly to reveal your
+            Ayurvedic profile.</p>
+
+        <form id="quiz-form"
+            style="max-width: 800px; margin: 0 auto; background: var(--white); padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Name</label>
+                <input type="text" name="name" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Age</label>
+                <input type="number" name="age" required min="1" max="120"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Gender</label>
+                <select name="gender" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Weight (kg)</label>
+                <input type="number" name="weight" required min="1" step="0.1"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label>City</label>
+                <input type="text" name="city" required
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+
+            <hr style="margin-bottom: 30px; border: 0; border-top: 1px solid #eee;">
+
+            <!-- Questions -->
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>1. Body Frame</strong></p>
+                <label><input type="radio" name="q1" value="V" required> Thin, lanky, prominent joints</label><br>
+                <label><input type="radio" name="q1" value="P"> Medium, muscular, good proportions</label><br>
+                <label><input type="radio" name="q1" value="K"> Large, solid, heavy build</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>2. Skin</strong></p>
+                <label><input type="radio" name="q2" value="V" required> Dry, rough, cold to touch</label><br>
+                <label><input type="radio" name="q2" value="P"> Sensitive, reddish, warm, moles/freckles</label><br>
+                <label><input type="radio" name="q2" value="K"> Oily, smooth, cool, pale</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>3. Hair</strong></p>
+                <label><input type="radio" name="q3" value="V" required> Dry, frizzy, brittle</label><br>
+                <label><input type="radio" name="q3" value="P"> Fine, thinning, early graying</label><br>
+                <label><input type="radio" name="q3" value="K"> Thick, lustrous, wavy/curly</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>4. Appetite</strong></p>
+                <label><input type="radio" name="q4" value="V" required> Irregular, sometimes hungry, sometimes
+                    not</label><br>
+                <label><input type="radio" name="q4" value="P"> Strong, unbearable if meal is missed</label><br>
+                <label><input type="radio" name="q4" value="K"> Slow, steady, can skip meals easily</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>5. Sleep</strong></p>
+                <label><input type="radio" name="q5" value="V" required> Light, interrupted, trouble falling
+                    asleep</label><br>
+                <label><input type="radio" name="q5" value="P"> Moderate, sound, can wake up easily</label><br>
+                <label><input type="radio" name="q5" value="K"> Deep, heavy, trouble waking up</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>6. Temperament</strong></p>
+                <label><input type="radio" name="q6" value="V" required> Anxious, worrisome, changeable</label><br>
+                <label><input type="radio" name="q6" value="P"> Irritable, intense, ambitious</label><br>
+                <label><input type="radio" name="q6" value="K"> Calm, patient, easy-going</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>7. Memory</strong></p>
+                <label><input type="radio" name="q7" value="V" required> Quick to learn, quick to forget</label><br>
+                <label><input type="radio" name="q7" value="P"> Sharp, clear, good retention</label><br>
+                <label><input type="radio" name="q7" value="K"> Slow to learn, good long-term retention</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>8. Weather Preference</strong></p>
+                <label><input type="radio" name="q8" value="V" required> Dislike cold and wind</label><br>
+                <label><input type="radio" name="q8" value="P"> Dislike heat and sun</label><br>
+                <label><input type="radio" name="q8" value="K"> Dislike damp and cool weather</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>9. Speech</strong></p>
+                <label><input type="radio" name="q9" value="V" required> Fast, talkative, rambling</label><br>
+                <label><input type="radio" name="q9" value="P"> Sharp, direct, articulate</label><br>
+                <label><input type="radio" name="q9" value="K"> Slow, melodious, thoughtful</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>10. Activity Level</strong></p>
+                <label><input type="radio" name="q10" value="V" required> Hyperactive, restless</label><br>
+                <label><input type="radio" name="q10" value="P"> Moderate, competitive, driven</label><br>
+                <label><input type="radio" name="q10" value="K"> Slow, steady, lethargic</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>11. Digestion</strong></p>
+                <label><input type="radio" name="q11" value="V" required> Gassy, constipated, sensitive</label><br>
+                <label><input type="radio" name="q11" value="P"> Acidic, heartburn, loose stools</label><br>
+                <label><input type="radio" name="q11" value="K"> Slow, heavy, sluggish</label>
+            </div>
+
+            <div class="question" style="margin-bottom: 25px;">
+                <p><strong>12. Energy</strong></p>
+                <label><input type="radio" name="q12" value="V" required> Comes in bursts, tires easily</label><br>
+                <label><input type="radio" name="q12" value="P"> Moderate, good endurance</label><br>
+                <label><input type="radio" name="q12" value="K"> Steady, high endurance</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Analyze My
+                Dosha</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    document.getElementById('quiz-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = {
+            name: formData.get('name'),
+            city: formData.get('city'),
+            age: formData.get('age'),
+            gender: formData.get('gender'),
+            weight: formData.get('weight'),
+            answers: {}
+        };
+
+        for (let i = 1; i <= 12; i++) {
+            data.answers[`q${i}`] = formData.get(`q${i}`);
+        }
+
+        fetch('/api/submit-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    // Store results in localStorage for the results page
+                    localStorage.setItem('ayurDoshaResult', JSON.stringify(result));
+                    window.location.href = '/result';
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
+</script>
+{% endblock %}

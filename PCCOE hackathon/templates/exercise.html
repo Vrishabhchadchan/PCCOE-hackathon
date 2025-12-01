@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Dosha Exercises - AyurDosha Pro{% endblock %}
+
+{% block content %}
+<section class="exercise-section" style="padding: 60px 0; min-height: 80vh;">
+    <div class="container">
+        <div class="text-center mb-5 animate-fade-in">
+            <h1 class="text-gradient mb-3">Dosha-Specific Yoga & Exercises</h1>
+            <p class="text-muted lead">Balance your constitution with movement tailored to your body type.</p>
+        </div>
+
+        <div class="accordion" id="doshaAccordion" style="max-width: 900px; margin: 0 auto;">
+
+            <!-- Vata Exercises -->
+            <div class="accordion-item border-0 mb-3 shadow-sm rounded-3 overflow-hidden animate-fade-in"
+                style="animation-delay: 0.2s;">
+                <h2 class="accordion-header" id="headingVata">
+                    <button class="accordion-button collapsed p-4" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseVata" aria-expanded="false" aria-controls="collapseVata"
+                        style="background: #E3F2FD; color: #1565C0; font-weight: 600;">
+                        <i class="fas fa-wind me-3"></i> Vata Balancing Exercises (Calming & Grounding)
+                    </button>
+                </h2>
+                <div id="collapseVata" class="accordion-collapse collapse" aria-labelledby="headingVata"
+                    data-bs-parent="#doshaAccordion">
+                    <div class="accordion-body p-4 bg-white">
+                        <p class="text-muted mb-4">Vata types need slow, steady, and grounding exercises to counter
+                            their restless energy. Avoid overexertion.</p>
+
+                        <div class="row g-4">
+                            <!-- Exercise 1 -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm p-3">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-light rounded-circle p-3 me-3"><i
+                                                class="fas fa-mountain text-primary"></i></div>
+                                        <h5 class="mb-0">Mountain Pose (Tadasana)</h5>
+                                    </div>
+                                    <p class="small text-muted">Stand firm like a mountain to ground your energy.</p>
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 30%;"
+                                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-end d-block mt-1 text-muted">5 mins</small>
+                                </div>
+                            </div>
+                            <!-- Exercise 2 -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm p-3">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-light rounded-circle p-3 me-3"><i
+                                                class="fas fa-child text-primary"></i></div>
+                                        <h5 class="mb-0">Tree Pose (Vrksasana)</h5>
+                                    </div>
+                                    <p class="small text-muted">Improves balance and focus, calming the mind.</p>
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%;"
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-end d-block mt-1 text-muted">7 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pitta Exercises -->
+            <div class="accordion-item border-0 mb-3 shadow-sm rounded-3 overflow-hidden animate-fade-in"
+                style="animation-delay: 0.3s;">
+                <h2 class="accordion-header" id="headingPitta">
+                    <button class="accordion-button collapsed p-4" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePitta" aria-expanded="false" aria-controls="collapsePitta"
+                        style="background: #FFEBEE; color: #C62828; font-weight: 600;">
+                        <i class="fas fa-fire me-3"></i> Pitta Balancing Exercises (Cooling & Relaxing)
+                    </button>
+                </h2>
+                <div id="collapsePitta" class="accordion-collapse collapse" aria-labelledby="headingPitta"
+                    data-bs-parent="#doshaAccordion">
+                    <div class="accordion-body p-4 bg-white">
+                        <p class="text-muted mb-4">Pitta types benefit from cooling, non-competitive activities. Avoid
+                            overheating.</p>
+
+                        <div class="row g-4">
+                            <!-- Exercise 1 -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm p-3">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-light rounded-circle p-3 me-3"><i
+                                                class="fas fa-water text-danger"></i></div>
+                                        <h5 class="mb-0">Swimming</h5>
+                                    </div>
+                                    <p class="small text-muted">Excellent for releasing heat and tension without joint
+                                        stress.</p>
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 60%;"
+                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-end d-block mt-1 text-muted">20 mins</small>
+                                </div>
+                            </div>
+                            <!-- Exercise 2 -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm p-3">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-light rounded-circle p-3 me-3"><i
+                                                class="fas fa-moon text-danger"></i></div>
+                                        <h5 class="mb-0">Moon Salutation (Chandra Namaskar)</h5>
+                                    </div>
+                                    <p class="small text-muted">A cooling flow to soothe fiery energy.</p>
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 45%;"
+                                            aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-end d-block mt-1 text-muted">10 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kapha Exercises -->
+            <div class="accordion-item border-0 mb-3 shadow-sm rounded-3 overflow-hidden animate-fade-in"
+                style="animation-delay: 0.4s;">
+                <h2 class="accordion-header" id="headingKapha">
+                    <button class="accordion-button collapsed p-4" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseKapha" aria-expanded="false" aria-controls="collapseKapha"
+                        style="background: #E8F5E9; color: #2E7D32; font-weight: 600;">
+                        <i class="fas fa-tint me-3"></i> Kapha Balancing Exercises (Stimulating & Energizing)
+                    </button>
+                </h2>
+                <div id="collapseKapha" class="accordion-collapse collapse" aria-labelledby="headingKapha"
+                    data-bs-parent="#doshaAccordion">
+                    <div class="accordion-body p-4 bg-white">
+                        <p class="text-muted mb-4">Kapha types need vigorous, stimulating exercise to clear stagnation
+                            and build heat.</p>
+
+                        <div class="row g-4">
+                            <!-- Exercise 1 -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm p-3">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-light rounded-circle p-3 me-3"><i
+                                                class="fas fa-running text-success"></i></div>
+                                        <h5 class="mb-0">Running / Jogging</h5>
+                                    </div>
+                                    <p class="small text-muted">Builds heat and improves circulation.</p>
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 80%;"
+                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-end d-block mt-1 text-muted">30 mins</small>
+                                </div>
+                            </div>
+                            <!-- Exercise 2 -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm p-3">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-light rounded-circle p-3 me-3"><i
+                                                class="fas fa-sun text-success"></i></div>
+                                        <h5 class="mb-0">Sun Salutation (Surya Namaskar)</h5>
+                                    </div>
+                                    <p class="small text-muted">Fast-paced rounds to generate internal heat.</p>
+                                    <div class="progress mt-auto" style="height: 5px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%;"
+                                            aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="text-end d-block mt-1 text-muted">15 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
